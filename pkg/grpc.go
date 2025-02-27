@@ -13,7 +13,7 @@ import (
 )
 
 // CreateAndObserveGRPCConn creates a new gRPC connection and observes its conn status.
-func CreateAndObserveGRPCConn(ctx context.Context, ch chan error, target string) (*grpc.ClientConn, error) {
+func CreateAndObserveGRPCConn(ctx context.Context, ch chan error, target string, optOpts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	var opts []grpc.DialOption
 	u, err := url.Parse(target)
 	if err != nil {
@@ -43,6 +43,10 @@ func CreateAndObserveGRPCConn(ctx context.Context, ch chan error, target string)
 		grpc.MaxCallRecvMsgSize(100*1024*1024),
 		grpc.MaxCallSendMsgSize(100*1024*1024),
 	))
+
+	for _, opt := range optOpts {
+		opts = append(opts, opt)
+	}
 
 	conn, err := grpc.NewClient(address, opts...)
 	if err != nil {

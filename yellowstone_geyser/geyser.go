@@ -51,14 +51,14 @@ type StreamClient struct {
 }
 
 // New creates a new Client instance.
-func New(ctx context.Context, grpcDialURL string, md metadata.MD) (*Client, error) {
+func New(ctx context.Context, grpcDialURL string, md metadata.MD, opts ...grpc.DialOption) (*Client, error) {
 	ch := make(chan error)
 
 	if md != nil {
 		ctx = metadata.NewOutgoingContext(ctx, md)
 	}
 
-	conn, err := pkg.CreateAndObserveGRPCConn(ctx, ch, grpcDialURL)
+	conn, err := pkg.CreateAndObserveGRPCConn(ctx, ch, grpcDialURL, opts...)
 	if err != nil {
 		return nil, err
 	}
