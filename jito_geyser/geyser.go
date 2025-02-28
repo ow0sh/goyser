@@ -3,8 +3,8 @@ package jito_geyser
 import (
 	"context"
 	"fmt"
-	jito_geyser_pb "github.com/weeaa/goyser/jito_geyser/pb"
-	"github.com/weeaa/goyser/pkg"
+	jito_geyser_pb "github.com/ow0sh/goyser/jito_geyser/pb"
+	"github.com/ow0sh/goyser/pkg"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"sync"
@@ -45,7 +45,7 @@ type StreamClient struct {
 // New creates a new Client instance.
 func New(ctx context.Context, grpcDialURL string, md metadata.MD) (*Client, error) {
 	ch := make(chan error)
-	conn, err := pkg.CreateAndObserveGRPCConn(ctx, ch, grpcDialURL, md)
+	conn, err := pkg.CreateAndObserveGRPCConn(ctx, ch, grpcDialURL, nil)
 	if err != nil {
 		return nil, err
 	}
