@@ -1,4 +1,4 @@
-module github.com/weeaa/goyser
+module github.com/ow0sh/goyser
 
 go 1.22.7
 
